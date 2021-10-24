@@ -6,6 +6,8 @@ project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} 
 src/main.cpp
+src/Player.cpp
+src/World.cpp
 )
 
 add_subdirectory(external/sfml)
