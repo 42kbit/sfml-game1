@@ -29,6 +29,11 @@ void game::Player::wing()
     m_Velocity = {0, -PUNCH_FORCE};
 }
 
+void game::Player::addScore(uint32_t value)
+{
+    m_Score += value;
+}
+
 game::Player::~Player()
 {
 

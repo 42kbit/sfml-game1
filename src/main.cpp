@@ -11,6 +11,10 @@ int main()
     window.setFramerateLimit(60);
 
     game::Player player(window);
+    game::World world(window);
+
+    world.addLine(500, 0b11111011);
+
     player.wing();
     while (window.isOpen())
     {
@@ -25,7 +29,8 @@ int main()
         player.update();
 
         window.clear();
-        window.draw(player.getGFX());
+            world.render(window);
+            window.draw(player.getGFX());
         window.display();
     }
 

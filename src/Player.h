@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <cinttypes>
+
 namespace game{
 
 class Player
@@ -14,8 +16,10 @@ public:
     inline sf::RectangleShape& getGFX() { return m_GFX; };
 
     void wing();
-
     void update();
+
+    void addScore(uint32_t value);
+    inline uint32_t getScore() { return m_Score; };
 
     const float DRAG = 0.97f;
     const float PUNCH_FORCE = 10.f;
@@ -23,6 +27,8 @@ public:
 private:
     sf::Vector2f m_Velocity;
     sf::RectangleShape m_GFX;
+
+    uint32_t m_Score;
 };
 
 }
