@@ -4,8 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include "Pipe.h"
 
-//TODO: Pipetypes declaration at "World.h", render a pipe.
-
 namespace game{
 
 class World
@@ -16,6 +14,8 @@ public:
     void render(sf::RenderTarget& renderTarget);
 
     void addLine(float xPos, uint8_t pipeMap);
+
+    inline std::vector<PipeLine>& getPipeLines() { return m_PipeLines; };
 private:
     std::vector<PipeLine> m_PipeLines;
 

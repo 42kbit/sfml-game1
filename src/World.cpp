@@ -16,7 +16,6 @@ void game::World::render(sf::RenderTarget& renderTarget)
 }
 
 #include <cmath>
-#include <iostream>
 
 void game::World::addLine(float xPos, uint8_t pipeMap)
 {
@@ -24,7 +23,6 @@ void game::World::addLine(float xPos, uint8_t pipeMap)
     for(uint32_t i = 0; i < line.getSegments().size(); i++)
     {
         uint8_t digit = pow(2, 7-i);
-        std::cout << (uint32_t)((pipeMap&digit) >> (7-i)) << std::endl;
         line.getSegments()[i].setType((uint32_t)((pipeMap&digit) >> (7-i)) == 1? &m_DefaultPipe : nullptr);
     }
     m_PipeLines.push_back(line);

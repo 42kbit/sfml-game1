@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "World.h"
+
 #include <cinttypes>
 
 namespace game{
@@ -10,7 +12,7 @@ namespace game{
 class Player
 {
 public:
-    Player(sf::RenderWindow& win);
+    Player(sf::RenderWindow& win, World& world);
     ~Player();
 
     inline sf::RectangleShape& getGFX() { return m_GFX; };
@@ -24,7 +26,11 @@ public:
     const float DRAG = 0.97f;
     const float PUNCH_FORCE = 10.f;
 
+    const float PLAYER_X_SPEED = 0.5f;
+
 private:
+    World& m_WorldRef;
+
     sf::Vector2f m_Velocity;
     sf::RectangleShape m_GFX;
 

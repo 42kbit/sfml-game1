@@ -10,8 +10,8 @@ int main()
 
     window.setFramerateLimit(60);
 
-    game::Player player(window);
     game::World world(window);
+    game::Player player(window, world);
 
     world.addLine(500, 0b11111011);
 
