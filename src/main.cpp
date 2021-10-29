@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "World.h"
+#include "Background.h"
 
 #include <cmath>
 
@@ -16,6 +17,7 @@ int main()
     game::Player player(window, world);
 
     sf::Clock pipeClock;
+    game::Background background(window);
 
     while (window.isOpen())
     {
@@ -37,6 +39,7 @@ int main()
         }
 
         window.clear();
+            window.draw(background.getGFX());
             world.render(window);
             window.draw(player.getGFX());
         window.display();
