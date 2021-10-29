@@ -11,25 +11,28 @@ game::Player::Player(sf::RenderWindow& win, World& world)
     m_GFX.setOrigin(m_GFX.getSize() / 2.f);
     m_GFX.setPosition(sf::Vector2f(win.getSize().x / 8, win.getSize().y / 2u));
 
-    m_Velocity = {PLAYER_X_SPEED, 0.f};
+    m_Velocity = {0.f, 0.f};
 }
 
-#include <iostream>
+static void lose()
+{
+    exit(0);
+}
 
 void game::Player::update()
 {
     m_GFX.move(m_Velocity);
 
-    if(m_Velocity.y < -1.f) // if flying up
+    if(m_Velocity.y < -0.1f) // if flying up
         m_Velocity.y = m_Velocity.y * DRAG;
-    m_Velocity.y += DRAG / 5.f;
+    m_Velocity.y += 0.5f;
 
     m_GFX.setRotation(m_Velocity.y * 5.f);
 
     for(uint32_t i = 0; i < m_WorldRef.getPipeLines().size(); i++)
-        for(uint32_t j = 0; j < m_WorldRef.getPipeLines()[i].getSegments().size(); j++)
+        for(uint32_t j = 0; j < m_WorldRef.getPipeLines()[i]->getSegments().size(); j++)
         {
-            auto& currentSegment = m_WorldRef.getPipeLines()[i].getSegments()[j];
+            auto& currentSegment = m_WorldRef.getPipeLines()[i]->getSegments()[j];
             const auto& currentBounds = currentSegment.getGFX().getGlobalBounds();
             auto& playerPos = m_GFX.getPosition();
 
@@ -37,10 +40,12 @@ void game::Player::update()
                 if(currentSegment.getType() != nullptr &&
                    (playerPos.y > currentBounds.top && playerPos.y < currentBounds.top + currentBounds.height))
                 {
-                    m_GFX.setPosition(sf::Vector2f(0, playerPos.y));
+                    lose();
                 }
             }
         }
+    if(m_GFX.getPosition().y < 0 || m_GFX.getPosition().y > m_WorldRef.getWindow().getSize().y)
+        lose();
 }
 
 void game::Player::wing()

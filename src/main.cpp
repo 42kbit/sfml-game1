@@ -3,9 +3,11 @@
 #include "Player.h"
 #include "World.h"
 
+#include <cmath>
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
     sf::Event event;
 
     window.setFramerateLimit(60);
@@ -13,9 +15,8 @@ int main()
     game::World world(window);
     game::Player player(window, world);
 
-    world.addLine(500, 0b11111011);
+    sf::Clock pipeClock;
 
-    player.wing();
     while (window.isOpen())
     {
         while (window.pollEvent(event))
@@ -26,7 +27,14 @@ int main()
                 player.wing();
         }
 
+        world.updatePipeLines();
         player.update();
+
+        if(pipeClock.getElapsedTime().asSeconds() > 3.f){
+            uint8_t nextPattern = 255 - pow(2, rand() % 8);
+            world.addLine(window.getSize().x, nextPattern);
+            pipeClock.restart();
+        }
 
         window.clear();
             world.render(window);

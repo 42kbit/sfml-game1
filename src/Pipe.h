@@ -48,7 +48,6 @@ class PipeLine
 {
 public:
     PipeLine(float xPos, float size)
-    : m_Xpos(xPos)
     {
         for(uint32_t i = 0; i < m_Segments.size(); i++)
         {
@@ -57,9 +56,34 @@ public:
         }
     }
 
+    PipeLine(PipeLine& other)
+    {
+        m_Segments = other.m_Segments;
+    }
+
+    const float MOVE_X_SPEED = -1.8f;
+
+    void update()
+    {
+        move({MOVE_X_SPEED, 0});
+    }
+
+    void move(sf::Vector2f dp)
+    {
+        for(uint32_t i = 0; i < m_Segments.size(); i++){
+            m_Segments[i].getGFX().move(dp);
+        }
+    }
+
+    bool isOutOfView(){
+        auto& zeroElementGFX = m_Segments[0].getGFX();
+        if(zeroElementGFX.getPosition().x + zeroElementGFX.getSize().x < 0)
+            return true;
+        return false;
+    }
+
     inline std::array<PipeSegment, 8>& getSegments() { return m_Segments; };
 private:
-    float m_Xpos;
     std::array<PipeSegment, 8> m_Segments;
 };
 

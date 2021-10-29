@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "Pipe.h"
 
+#include <iostream>
+
 namespace game{
 
 class World
@@ -15,9 +17,12 @@ public:
 
     void addLine(float xPos, uint8_t pipeMap);
 
-    inline std::vector<PipeLine>& getPipeLines() { return m_PipeLines; };
+    void updatePipeLines();
+
+    inline sf::RenderWindow& getWindow() { return m_WindowRef; } ;
+    inline std::vector<PipeLine*>& getPipeLines() { return m_PipeLines; };
 private:
-    std::vector<PipeLine> m_PipeLines;
+    std::vector<PipeLine*> m_PipeLines;
 
     PipeType m_DefaultPipe;
     PipeType m_TopPipe;

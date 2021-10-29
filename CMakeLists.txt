@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 set(PROJECT_NAME SFML_GAME1)
 
@@ -9,6 +9,8 @@ src/main.cpp
 src/Player.cpp
 src/World.cpp
 )
+
+set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(external/sfml)
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-audio sfml-system sfml-window sfml-network)
