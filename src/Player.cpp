@@ -14,6 +14,8 @@ game::Player::Player(sf::RenderWindow& win, World& world)
     m_Velocity = {PLAYER_X_SPEED, 0.f};
 }
 
+#include <iostream>
+
 void game::Player::update()
 {
     m_GFX.move(m_Velocity);
@@ -26,8 +28,19 @@ void game::Player::update()
 
     for(uint32_t i = 0; i < m_WorldRef.getPipeLines().size(); i++)
         for(uint32_t j = 0; j < m_WorldRef.getPipeLines()[i].getSegments().size(); j++)
-            if(m_GFX.getGlobalBounds().intersects(m_WorldRef.getPipeLines()[i].getSegments()[j].getGFX().getGlobalBounds()))
-                exit(0);
+        {
+            auto& currentSegment = m_WorldRef.getPipeLines()[i].getSegments()[j];
+            const auto& currentBounds = currentSegment.getGFX().getGlobalBounds();
+            auto& playerPos = m_GFX.getPosition();
+
+            if(playerPos.x > currentBounds.left && playerPos.x < currentBounds.left + currentBounds.width){
+                if(currentSegment.getType() != nullptr &&
+                   (playerPos.y > currentBounds.top && playerPos.y < currentBounds.top + currentBounds.height))
+                {
+                    m_GFX.setPosition(sf::Vector2f(0, playerPos.y));
+                }
+            }
+        }
 }
 
 void game::Player::wing()

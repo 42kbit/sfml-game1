@@ -26,7 +26,7 @@ public:
     const float DRAG = 0.97f;
     const float PUNCH_FORCE = 10.f;
 
-    const float PLAYER_X_SPEED = 0.5f;
+    const float PLAYER_X_SPEED = 4.f;
 
 private:
     World& m_WorldRef;

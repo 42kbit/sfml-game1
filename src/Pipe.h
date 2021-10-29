@@ -48,6 +48,7 @@ class PipeLine
 {
 public:
     PipeLine(float xPos, float size)
+    : m_Xpos(xPos)
     {
         for(uint32_t i = 0; i < m_Segments.size(); i++)
         {
@@ -58,6 +59,7 @@ public:
 
     inline std::array<PipeSegment, 8>& getSegments() { return m_Segments; };
 private:
+    float m_Xpos;
     std::array<PipeSegment, 8> m_Segments;
 };
 

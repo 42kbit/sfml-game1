@@ -19,11 +19,26 @@ void game::World::render(sf::RenderTarget& renderTarget)
 
 void game::World::addLine(float xPos, uint8_t pipeMap)
 {
-    game::PipeLine line(xPos, m_WindowRef.getSize().y / 8.f);
+    game::PipeLine line(xPos, m_WindowRef.getSize().y / 8 - 1);
     for(uint32_t i = 0; i < line.getSegments().size(); i++)
     {
         uint8_t digit = pow(2, 7-i);
-        line.getSegments()[i].setType((uint32_t)((pipeMap&digit) >> (7-i)) == 1? &m_DefaultPipe : nullptr);
+        PipeType* type = nullptr;
+        if((uint32_t)((pipeMap&digit) >> (7-i)) == 1)
+        {
+            type = &m_DefaultPipe;
+        }
+        line.getSegments()[i].setType(type);
+    }
+
+    for(uint32_t i = 0; i < line.getSegments().size(); i++)
+    {
+        uint8_t digit = pow(2, 7-i);
+        if((uint32_t)((pipeMap&digit) >> (7-i)) == 0)
+        {
+            line.getSegments()[i - 1].setType(&m_LowPipe);
+            line.getSegments()[i + 1].setType(&m_TopPipe);
+        }
     }
     m_PipeLines.push_back(line);
 }
